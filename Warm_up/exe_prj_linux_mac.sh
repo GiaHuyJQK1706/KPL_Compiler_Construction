@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mingw32-make
+make
 
 if [ $? -ne 0 ]; then
     echo "Makefile execution failed."
