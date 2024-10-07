@@ -30,7 +30,7 @@ int main() {
                 strcpy(temp, p);
                 strcpy(h.word, p);
                 h.count = 1;
-                sprintf(h.lines, ", %d", count);
+                sprintf(h.lines, ",%d", count);
 
                 if (search(stopWords, h.word) == NULL) {
                     insertNode(&wordTree, h);
