@@ -4,10 +4,21 @@
    ```bash
    mingw32-make
    ```
-2. Chạy lệnh để xem kết quả
-- Dùng Terminal(VSCode)
+2. Chạy chương trình và xem kết quả
+- Dùng Terminal(VSCode) để chạy chương trình
    ```bash
    ./scanner <*.kpl>
    ```
+- Dùng cmd để chạy chương trình
+   ```bash
+   scanner <*.kpl>
+   ```
 ### Đối với máy tính dùng MacOS/Linux(Ubuntu, Debian...)
-
+1. Chạy lệnh sau
+   ```bash
+   make
+   ```
+2. Chạy chương trình và xem kết quả
+   ```bash
+   ./scanner <*.kpl>
+   ```
