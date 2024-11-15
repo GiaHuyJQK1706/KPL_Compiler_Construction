@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <limits.h>
 #include "reader.h"
 #include "charcode.h"
 #include "token.h"
