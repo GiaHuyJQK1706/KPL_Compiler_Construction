@@ -244,7 +244,7 @@ Token * getToken(void) {
             token -> tokenType = SB_LT;
             return token;
         }
-    case CHAR_EXCLAIMATION:
+    case CHAR_EXCLAMATION:
         // Make empty token
         token = makeToken(TK_NONE, lineNo, colNo);
 

@@ -7,6 +7,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <limits.h>
+#include <math.h>
 #include "reader.h"
 #include "charcode.h"
 #include "token.h"
@@ -65,7 +66,7 @@ Token * getToken(void) {
             case CHAR_EQ:
                 state = 19;
                 break;
-            case CHAR_EXCLAIMATION:
+            case CHAR_EXCLAMATION:
                 state = 20;
                 break;
             case CHAR_COMMA:

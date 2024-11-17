@@ -17,7 +17,7 @@ typedef enum {
     CHAR_SLASH,
     CHAR_LT,
     CHAR_GT,
-    CHAR_EXCLAIMATION,
+    CHAR_EXCLAMATION,
     CHAR_EQ,
     CHAR_COMMA,
     CHAR_PERIOD,
