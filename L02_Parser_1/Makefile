@@ -1,8 +1,8 @@
 CFLAGS = -c -Wall
 CC = gcc
 LIBS = -lm
-OBJ = scanner.o reader.o charcode.o token.o error.o
-TARGET = scanner
+OBJ = scanner.o reader.o charcode.o token.o error.o parser.o main.o
+TARGET = parser
 
 all: $(TARGET)
 
