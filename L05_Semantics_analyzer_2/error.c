@@ -8,17 +8,16 @@
 #include <stdlib.h>
 #include "error.h"
 
-#define NUM_OF_ERRORS 30
+#define NUM_OF_ERRORS 29
 
 struct ErrorMessage {
     ErrorCode errorCode;
     char *message;
 };
 
-struct ErrorMessage errors[30] = {
+struct ErrorMessage errors[29] = {
     {ERR_END_OF_COMMENT, "End of comment expected."},
     {ERR_IDENT_TOO_LONG, "Identifier too long."},
-    {ERR_NUMBER_TOO_LONG,"Value of integer number exceeds the range!"},
     {ERR_INVALID_CONSTANT_CHAR, "Invalid char constant."},
     {ERR_INVALID_SYMBOL, "Invalid symbol."},
     {ERR_INVALID_IDENT, "An identifier expected."},
@@ -41,7 +40,7 @@ struct ErrorMessage errors[30] = {
     {ERR_UNDECLARED_INT_CONSTANT, "Undeclared integer constant."},
     {ERR_UNDECLARED_TYPE, "Undeclared type."},
     {ERR_UNDECLARED_VARIABLE, "Undeclared variable."},
-    {ERR_INVALID_RETURN, "Expect the owner of the current scope."},
+    {ERR_UNDECLARED_FUNCTION, "Undeclared function."},
     {ERR_UNDECLARED_PROCEDURE, "Undeclared procedure."},
     {ERR_DUPLICATE_IDENT, "Duplicate identifier."},
     {ERR_TYPE_INCONSISTENCY, "Type inconsistency"},
@@ -54,7 +53,7 @@ void error(ErrorCode err, int lineNo, int colNo) {
         if (errors[i].errorCode == err) {
         printf("%d-%d:%s\n", lineNo, colNo, errors[i].message);
         exit(0);
-    }
+        }
 }
 
 void missingToken(TokenType tokenType, int lineNo, int colNo) {

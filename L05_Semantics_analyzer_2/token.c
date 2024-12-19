@@ -36,7 +36,7 @@ struct {
 
 int keywordEq(char *kw, char *string) {
     while ((*kw != '\0') && (*string != '\0')) {
-        if (*kw != toupper(*string)) break;
+        if (*kw != *string) break;
         kw ++; string ++;
     }
     return ((*kw == '\0') && (*string == '\0'));

@@ -34,7 +34,6 @@ Type* makeCharType(void) {
 }
 
 Type* makeArrayType(int arraySize, Type* elementType) {
-    //TODO
     Type* type = (Type*) malloc(sizeof(Type));
     type->typeClass = TP_ARRAY;
     type->arraySize = arraySize;
@@ -55,23 +54,23 @@ Type* duplicateType(Type* type) {
 int compareType(Type* type1, Type* type2) {
     if (type1->typeClass == type2->typeClass) {
         if (type1->typeClass == TP_ARRAY) {
-        if (type1->arraySize == type2->arraySize)
-        return compareType(type1->elementType, type2->elementType);
-        else return 0;
+            if (type1->arraySize == type2->arraySize)
+                return compareType(type1->elementType, type2->elementType);
+            else return 0;
         } else return 1;
     } else return 0;
 }
 
 void freeType(Type* type) {
     switch (type->typeClass) {
-    case TP_INT:
-    case TP_CHAR:
-        free(type);
-        break;
-    case TP_ARRAY:
-        freeType(type->elementType);
-        freeType(type);
-        break;
+        case TP_INT:
+        case TP_CHAR:
+            free(type);
+            break;
+        case TP_ARRAY:
+            freeType(type->elementType);
+            freeType(type);
+            break;
     }
 }
 
@@ -92,10 +91,9 @@ ConstantValue* makeCharConstant(char ch) {
 }
 
 ConstantValue* duplicateConstantValue(ConstantValue* v) {
-    //TODO
     ConstantValue* value = (ConstantValue*) malloc(sizeof(ConstantValue));
     value->type = v->type;
-    if (v->type == TP_INT)
+    if (v->type == TP_INT) 
         value->intValue = v->intValue;
     else
         value->charValue = v->charValue;
@@ -132,7 +130,6 @@ Object* createConstantObject(char *name) {
 }
 
 Object* createTypeObject(char *name) {
-    //TODO
     Object* obj = (Object*) malloc(sizeof(Object));
     strcpy(obj->name, name);
     obj->kind = OBJ_TYPE;
@@ -160,7 +157,6 @@ Object* createFunctionObject(char *name) {
 }
 
 Object* createProcedureObject(char *name) {
-    //TODO
     Object* obj = (Object*) malloc(sizeof(Object));
     strcpy(obj->name, name);
     obj->kind = OBJ_PROCEDURE;
@@ -171,7 +167,6 @@ Object* createProcedureObject(char *name) {
 }
 
 Object* createParameterObject(char *name, enum ParamKind kind, Object* owner) {
-    //TODO
     Object* obj = (Object*) malloc(sizeof(Object));
     strcpy(obj->name, name);
     obj->kind = OBJ_PARAMETER;
@@ -183,36 +178,36 @@ Object* createParameterObject(char *name, enum ParamKind kind, Object* owner) {
 
 void freeObject(Object* obj) {
     switch (obj->kind) {
-    case OBJ_CONSTANT:
-        free(obj->constAttrs->value);
-        free(obj->constAttrs);
-        break;
-    case OBJ_TYPE:
-        free(obj->typeAttrs->actualType);
-        free(obj->typeAttrs);
-        break;
-    case OBJ_VARIABLE:
-        free(obj->varAttrs->type);
-        free(obj->varAttrs);
-        break;
-    case OBJ_FUNCTION:
-        freeReferenceList(obj->funcAttrs->paramList);
-        freeType(obj->funcAttrs->returnType);
-        freeScope(obj->funcAttrs->scope);
-        free(obj->funcAttrs);
-        break;
-    case OBJ_PROCEDURE:
-        freeReferenceList(obj->procAttrs->paramList);
-        freeScope(obj->procAttrs->scope);
-        free(obj->procAttrs);
-        break;
-    case OBJ_PROGRAM:
-        freeScope(obj->progAttrs->scope);
-        free(obj->progAttrs);
-        break;
-    case OBJ_PARAMETER:
-        freeType(obj->paramAttrs->type);
-        free(obj->paramAttrs);
+        case OBJ_CONSTANT:
+            free(obj->constAttrs->value);
+            free(obj->constAttrs);
+            break;
+        case OBJ_TYPE:
+            free(obj->typeAttrs->actualType);
+            free(obj->typeAttrs);
+            break;
+        case OBJ_VARIABLE:
+            free(obj->varAttrs->type);
+            free(obj->varAttrs);
+            break;
+        case OBJ_FUNCTION:
+            freeReferenceList(obj->funcAttrs->paramList);
+            freeType(obj->funcAttrs->returnType);
+            freeScope(obj->funcAttrs->scope);
+            free(obj->funcAttrs);
+            break;
+        case OBJ_PROCEDURE:
+            freeReferenceList(obj->procAttrs->paramList);
+            freeScope(obj->procAttrs->scope);
+            free(obj->procAttrs);
+            break;
+        case OBJ_PROGRAM:
+            freeScope(obj->progAttrs->scope);
+            free(obj->progAttrs);
+            break;
+        case OBJ_PARAMETER:
+            freeType(obj->paramAttrs->type);
+            free(obj->paramAttrs);
     }
     free(obj);
 }
@@ -260,7 +255,7 @@ void addObject(ObjectNode **objList, Object* obj) {
 Object* findObject(ObjectNode *objList, char *name) {
     while (objList != NULL) {
         if (strcmp(objList->object->name, name) == 0) 
-        return objList->object;
+            return objList->object;
         else objList = objList->next;
     }
     return NULL;

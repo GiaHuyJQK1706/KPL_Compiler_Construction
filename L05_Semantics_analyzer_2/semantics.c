@@ -3,7 +3,7 @@
  * @author Huu-Duc Nguyen
  * @version 1.0
  */
-
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "semantics.h"
@@ -26,14 +26,17 @@ Object* lookupObject(char *name) {
     return NULL;
 }
 
-
 void checkFreshIdent(char *name) {
     if (findObject(symtab->currentScope->objList, name) != NULL)
         error(ERR_DUPLICATE_IDENT, currentToken->lineNo, currentToken->colNo);
 }
+
 Object* checkDeclaredIdent(char* name) {
-    // TODO
-    
+    Object* obj = lookupObject(name);
+    if (obj == NULL) {
+        error(ERR_UNDECLARED_IDENT,currentToken->lineNo, currentToken->colNo);
+    }
+    return obj;
 }
 
 Object* checkDeclaredConstant(char* name) {
@@ -55,16 +58,105 @@ Object* checkDeclaredType(char* name) {
 
     return obj;
 }
+
 Object* checkDeclaredVariable(char* name) {
-    // TODO
-    
+    Object* obj = lookupObject(name);
+    if (obj == NULL)
+        error(ERR_UNDECLARED_VARIABLE,currentToken->lineNo, currentToken->colNo);
+    if (obj->kind != OBJ_VARIABLE)
+        error(ERR_INVALID_VARIABLE,currentToken->lineNo, currentToken->colNo);
+
+    return obj;
+}
+
+Object* checkDeclaredFunction(char* name) {
+    Object* obj = lookupObject(name);
+    if (obj == NULL)
+        error(ERR_UNDECLARED_FUNCTION,currentToken->lineNo, currentToken->colNo);
+    if (obj->kind != OBJ_FUNCTION)
+        error(ERR_INVALID_FUNCTION,currentToken->lineNo, currentToken->colNo);
+
+    return obj;
 }
 
 Object* checkDeclaredProcedure(char* name) {
-    // TODO
+    Object* obj = lookupObject(name);
+    if (obj == NULL)
+        error(ERR_UNDECLARED_PROCEDURE,currentToken->lineNo, currentToken->colNo);
+    if (obj->kind != OBJ_PROCEDURE)
+        error(ERR_INVALID_PROCEDURE,currentToken->lineNo, currentToken->colNo);
+
+    return obj;
 }
 
 Object* checkDeclaredLValueIdent(char* name) {
-    // TODO
+    Object* obj = lookupObject(name);
+    if (obj == NULL)
+        error(ERR_UNDECLARED_IDENT,currentToken->lineNo, currentToken->colNo);
+
+    switch (obj->kind) {
+    case OBJ_VARIABLE:
+    case OBJ_PARAMETER:
+        break;
+    case OBJ_FUNCTION:
+        if (obj != symtab->currentScope->owner) 
+        error(ERR_INVALID_IDENT,currentToken->lineNo, currentToken->colNo);
+        break;
+    default:
+        error(ERR_INVALID_IDENT,currentToken->lineNo, currentToken->colNo);
+    }
+
+    return obj;
 }
 
+
+void checkIntType(Type* type) {
+    // TODO
+    if(type == NULL || type->typeClass != TP_INT) {
+        error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
+    }
+}
+
+void checkCharType(Type* type) {
+    // TODO
+    if(type == NULL || type->typeClass != TP_CHAR) {
+        error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
+    }
+}
+
+void checkBasicType(Type* type) {
+    // TODO
+    if(type == NULL || (type->typeClass != TP_INT && type->typeClass != TP_CHAR)) {
+        error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
+    }
+}
+
+void checkArrayType(Type* type) {
+    // TODO
+    if(type == NULL || type->typeClass != TP_ARRAY) {
+        error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
+    }
+
+    if(type->elementType->typeClass == TP_ARRAY) {
+        checkArrayType(type->elementType);
+    }
+    // } else if(type->elementType == TP_CHAR || type->elementType == TP_INT) {
+        
+    // }
+}
+
+void checkTypeEquality(Type* type1, Type* type2) {
+    // TODO
+    if(type1->typeClass == type2->typeClass) {
+        if(type1->typeClass == TP_ARRAY) {
+            if(type1->arraySize == type2->arraySize) {
+                checkTypeEquality(type1->elementType, type2->elementType);
+            } else {
+                error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
+            }
+            } else {
+            return ;
+        }
+    }
+    error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
+}

@@ -98,4 +98,3 @@ void printObjectList(ObjectNode* objList, int indent) {
 void printScope(Scope* scope, int indent) {
     printObjectList(scope->objList, indent);
 }
-
